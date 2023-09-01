@@ -5,6 +5,7 @@ import tkinter as tk
 import random
 import threading
 import time
+import os
 
 #open ('set1.txt', 'r')
 
@@ -97,16 +98,18 @@ class MyGUI:
 
     def importDoc(self):
         txtdocstr = self.useTxtDocEntry.get()
+        currentdir = os.path.dirname(__file__)
+        filedir = currentdir + "/Sets/" + txtdocstr + ".txt" 
 
         if len(txtdocstr.strip()) >= 1:
             try:
-                f = open(txtdocstr + ".txt", 'r')
+                f = open(filedir, 'r')
             except FileNotFoundError:
                 print("File could not be found")
                 thread = threading.Thread(target=self.changeLabelText, args=("File not found...","Red",30))
                 thread.start()
 
-            with open(txtdocstr + ".txt", 'r') as f:
+            with open(filedir, 'r') as f:
                 content = f.readlines()
                 for v in content:
                     if v.startswith("#"):
