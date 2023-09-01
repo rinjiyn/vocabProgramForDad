@@ -1,0 +1,3 @@
+# Start with the word, seperate it with =, and end with its definition.
+banana = hello
+apple = hi
