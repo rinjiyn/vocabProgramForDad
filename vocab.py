@@ -7,11 +7,7 @@ import threading
 import time
 import os
 
-#open ('set1.txt', 'r')
 
-
-# // If you find yourself re-using code constantly, turn them into functions and call them instead.
-# // I called these functions multiple times in my code.
 def grammarize(string):
     newstring =  str(string)
     return newstring.strip().lower().capitalize()
@@ -22,11 +18,10 @@ def deleteChildren(frame):
 
 
 
-# // Creating a class called MyGUI. KIND OF using an Object-Oriented Programming approach. (OOP)
+
 class MyGUI:
-    # // When calling the class "MyGUI", this "function" is instantly called when you "initialize" (__init__) MyGUI()
     def __init__(self):
-    # // The self variable is used to represent the instance of the class which is often used in OOP.
+
         self.storeddict = {}
         self.currentpair = None
  
@@ -98,6 +93,7 @@ class MyGUI:
 
     def importDoc(self):
         txtdocstr = self.useTxtDocEntry.get()
+
         currentdir = os.path.dirname(__file__)
         filedir = currentdir + "/Sets/" + txtdocstr + ".txt" 
 
@@ -108,23 +104,24 @@ class MyGUI:
                 print("File could not be found")
                 thread = threading.Thread(target=self.changeLabelText, args=("File not found...","Red",30))
                 thread.start()
+                return
 
-            with open(filedir, 'r') as f:
-                content = f.readlines()
-                for v in content:
-                    if v.startswith("#"):
-                        continue
-                    string = v.strip("\n")
-                    seperated = string.split("=")
-                    
-                    self.storeddict[grammarize(seperated[0])] = {
-                        "definition" : grammarize(seperated[1]),
-                        "picked" : False
-                    }
-
+            content = f.readlines()
+            for v in content:
+                if v.startswith("#"):
+                    continue
+                string = v.strip("\n")
+                seperated = string.split("=")
+                
+                self.storeddict[grammarize(seperated[0])] = {
+                    "definition" : grammarize(seperated[1]),
+                    "picked" : False
+                }
             f.close()
+
             thread = threading.Thread(target=self.changeLabelText, args=("Successfully Imported!","Green",30))
             thread.start()
+
             print(f.closed)
             print(self.storeddict)
 
@@ -132,7 +129,6 @@ class MyGUI:
         textboxstr = self.textbox.get("1.0", tk.END)
         entryboxstr = self.entrybox.get()
 
-        
 
         if len(entryboxstr.strip()) >= 1 and len(textboxstr.strip()) >= 1:
 
